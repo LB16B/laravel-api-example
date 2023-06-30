@@ -14,7 +14,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        // READ 全取得
+        $articles = Article::all();
+        return response($articles, 200);
     }
 
     /**
@@ -25,7 +27,13 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article = new Article;
+
+        $article->title = $request->input('title');
+        $article->body = $request->input('body');
+
+        $article->save();
+        return response($article, 201);
     }
 
     /**
@@ -36,7 +44,9 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        // READ 単一取得
+        $article = Article::find($id);
+        return response($article, 200);
     }
 
     /**
@@ -48,7 +58,14 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // UPDATE
+        $article = Article::find($id);
+
+        $article->title = $request->input('title');
+        $article->body = $request->input('body');
+
+        $article->save();
+        return response($article, 200);
     }
 
     /**
@@ -59,6 +76,8 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // DELETE
+        Article::destroy($id);
+        return response('ok', 200);
     }
 }
